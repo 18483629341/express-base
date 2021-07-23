@@ -17,9 +17,10 @@ const users = require('./routes/users');
 
 // Passport Config
 require('./config/passport')(passport);
-
+const db = require('./config/database');
+console.log(db)
 // Connect to mongoose
-mongoose.connect("mongodb://localhost/node-app", {
+mongoose.connect(db.mongoURL, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
@@ -89,7 +90,7 @@ app.get("/about", (req, res) => {
 app.use("/ideas", ideas);
 app.use("/users", users);
 
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
   console.log(`Server started on ${port}`);
